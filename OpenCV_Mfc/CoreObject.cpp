@@ -223,6 +223,7 @@ void CCoreObject::UseCamVideo()
 	m_VideoCapture.get(0);
 	if (!m_VideoCapture.isOpened())
 	{
+		MessageBox(AfxGetMainWnd()->m_hWnd, L"Camera is not Surportted",L"NoCam", MB_ICONSTOP);
 		return;
 	}
 	BitFlag &= ~USEVIDEO;
