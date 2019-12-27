@@ -52,3 +52,6 @@
 #endif
 
 
+#include <memory>
+#include <vector>
+using namespace std;
