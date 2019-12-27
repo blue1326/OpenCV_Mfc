@@ -833,7 +833,7 @@ void CCoreObject::MeanShift()
 	rc.right = 400;
 	rc.bottom = 300;
 	//Rect track_window(0, 0, rc.right, rc.bottom);
-	Rect track_window(300, 200, 100, 50);
+	Rect track_window(mattemp.cols/2, mattemp.rows/2, 100, 50);
 	roi = mattemp(track_window);
 	cvtColor(roi, hsv_roi, COLOR_BGR2HSV);
 	inRange(hsv_roi, Scalar(0, 60, 32), Scalar(180, 255, 255), mask);
@@ -864,7 +864,7 @@ void CCoreObject::MeanShift()
 	rectangle(mattemp, track_window, 255, 2);
 	//imshow("img2", frame);
 	AdjustImageRatio(rc);
-	ShowImage(String("G Video"), mattemp, rc);
+	ShowImage(String("MeanShift"), mattemp, rc);
 	mattemp.release();
 	
 	

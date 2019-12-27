@@ -32,7 +32,7 @@ public://videofunctions
 	void DisplayHistogramVideoB(const CWnd* _targetDC);
 	bool VideoLoaded();
 	///non unse mfc picture control
-	void MeanShift();
+	
 	void UseCamVideo();
 	void UseKinnectVideo();
 	void LoadVideo(const char* FilePath);
@@ -83,6 +83,9 @@ private:
 	void CullImage(const CWnd* _targetDC, LPCRECT cullSurface, LPCRECT fullSurface);
 	void RGBFiltering(Mat _tagetImg);
 	void ResetPanel(const CWnd* _targetDC);
+
+public://imageProcessing algorithms
+	void MeanShift();
 private:
 	Mat m_matImage;
 	Mat m_matGray;

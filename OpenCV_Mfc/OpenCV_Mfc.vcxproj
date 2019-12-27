@@ -66,7 +66,8 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>../ThirdParty/OpenCV/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opencv_world420d.lib;</AdditionalDependencies>
-      <DelayLoadDLLs>opencv_world420d.dll;opencv_videoio_ffmpeg420_64.dll;opencv_img_hash420d.dll</DelayLoadDLLs>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -96,7 +97,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../ThirdParty/OpenCV/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opencv_world420.lib;</AdditionalDependencies>
-      <DelayLoadDLLs>opencv_world420.dll;opencv_videoio_ffmpeg420_64.dll;opencv_img_hash420.dll</DelayLoadDLLs>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
