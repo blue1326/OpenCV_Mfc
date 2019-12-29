@@ -231,6 +231,8 @@ void CCoreObject::UseCamVideo()
 	BitFlag |= USEWEBCAM;
 	m_VideoCapture.set(CAP_PROP_FRAME_WIDTH, 800);
 	m_VideoCapture.set(CAP_PROP_FRAME_HEIGHT, 600);
+	//m_VideoCapture.grab()
+	//InitMeanShiftWindow();
 	/*CRect rc;
 	rc.right = 400;
 	rc.bottom = 300;
@@ -700,6 +702,20 @@ void CCoreObject::ResetPanel(const CWnd* _targetDC)
 	dc.FillSolidRect(&rc, GetSysColor(COLOR_BTNFACE));
 }
 
+void CCoreObject::InitMeanShiftWindow()
+{
+	CRect rc;
+	rc.right = 400;
+	rc.bottom = 300;
+
+	//AdjustImageRatio(rc);
+		m_MeanShiftWindow.x = m_matImage.cols/2;
+		m_MeanShiftWindow.y = m_matImage.rows / 2;
+		m_MeanShiftWindow.width = 100;
+		m_MeanShiftWindow.height = 50;
+			//(m_matImage.cols / 2, m_matImage.rows / 2, 100, 50);
+}
+
 BITMAPINFO* CCoreObject::CreateBitmapInfo(int w, int h, int bpp)
 {
 	BITMAPINFO* bitmapinfo = NULL;
@@ -780,6 +796,7 @@ void CCoreObject::LoadVideo(const char* FilePath)
 	BitFlag &= ~USEIMAGE;
 	BitFlag &= ~USEWEBCAM;
 	SetFrameLimit((const float)m_VideoCapture.get(CAP_PROP_FPS));
+	//InitMeanShiftWindow();
 }
 void CCoreObject::DisplayVideo()
 {
@@ -791,7 +808,13 @@ void CCoreObject::DisplayVideo()
 	{
 		m_VideoCapture.release();
 		runningFlag = false;
+		isinit = false;
 		return;
+	}
+	else if(!isinit)
+	{
+		isinit = true;
+		InitMeanShiftWindow();
 	}
 	runningFlag = true;
 
@@ -834,8 +857,8 @@ void CCoreObject::MeanShift()
 	rc.right = 400;
 	rc.bottom = 300;
 	//Rect track_window(0, 0, rc.right, rc.bottom);
-	Rect track_window(mattemp.cols/2, mattemp.rows/2, 100, 50);
-	roi = mattemp(track_window);
+	//Rect track_window(mattemp.cols/2, mattemp.rows/2, 100, 50);
+	roi = mattemp(m_MeanShiftWindow);
 	cvtColor(roi, hsv_roi, COLOR_BGR2HSV);
 	inRange(hsv_roi, Scalar(0, 60, 32), Scalar(180, 255, 255), mask);
 	float range_[] = { 0,180 };
@@ -858,11 +881,11 @@ void CCoreObject::MeanShift()
 	calcBackProject(&hsv, 1, channels, roi_hist, dst, range);
 
 	// apply meanshift to get the new location
-	meanShift(dst, track_window, term_crit);
+	meanShift(dst, m_MeanShiftWindow, term_crit);
 
 	
 	// Draw it on image
-	rectangle(mattemp, track_window, 255, 2);
+	rectangle(mattemp, m_MeanShiftWindow, 255, 2);
 	//imshow("img2", frame);
 	AdjustImageRatio(rc);
 	ShowImage(String("MeanShift"), mattemp, rc);

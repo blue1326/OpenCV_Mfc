@@ -87,6 +87,10 @@ private:
 public://imageProcessing algorithms
 	void MeanShift();
 private:
+	bool isinit = false;
+	Rect m_MeanShiftWindow;
+	void InitMeanShiftWindow();
+private:
 	Mat m_matImage;
 	Mat m_matGray;
 	Mat m_matR;
